@@ -16,12 +16,7 @@ export function serviceAreaSvg(width: number, height: number): string {
 
   const counties = COUNTY_SHAPES.map((c) => {
     const payment = priceOf(c.slug);
-    const fill =
-      payment !== undefined
-        ? tierFill(payment)
-        : c.state === "GA"
-          ? "#15181A"
-          : UNSERVED_FILL;
+    const fill = payment !== undefined ? tierFill(payment) : UNSERVED_FILL;
     return `<path d="${c.d}" fill="${fill}" stroke="#0A1412" stroke-width="0.35"/>`;
   }).join("");
 

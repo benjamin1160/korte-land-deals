@@ -6,7 +6,7 @@ import { HQ, SERVICE_RADIUS_MI, starPath } from "./lib/geo";
 import { pixelFor, serviceAreaDataUri } from "./lib/static-map";
 import { SITE } from "./lib/site";
 
-export const alt = `Map of ${AREAS.length} North Florida counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}, with starting monthly payments for land-and-home packages`;
+export const alt = `Map of ${AREAS.length} Central Texas counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}, with starting monthly payments for land-and-home packages`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,14 +21,14 @@ const GOLD = "#FFC24A";
 /** Counties called out by name on the preview, and where their label sits. */
 const CALLOUTS: { slug: string; as?: string; place: "above" | "below"; dy?: number }[] =
   [
-    { slug: "taylor", place: "above" },
-    { slug: "suwannee", place: "above", dy: -28 },
-    { slug: "dixie", place: "below" },
-    { slug: "alachua", as: "Gainesville", place: "above" },
-    { slug: "marion", place: "above" },
-    { slug: "citrus", place: "below" },
-    { slug: "st-johns", place: "above" },
-    { slug: "flagler", place: "below" },
+    { slug: "williamson", place: "above" },
+    { slug: "milam", place: "above", dy: -26 },
+    { slug: "falls", place: "above" },
+    { slug: "lampasas", place: "above" },
+    { slug: "bastrop", place: "above" },
+    { slug: "robertson", place: "below" },
+    { slug: "hays", place: "below" },
+    { slug: "washington", place: "below" },
   ];
 
 const starMark = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -187,7 +187,7 @@ export default async function Image() {
             const a = areaBySlug(slug);
             if (!a) return null;
             const p = pixelFor(a.lat, a.lon, MAP_W, MAP_H);
-            const isHQ = slug === "alachua";
+            const isHQ = slug === "williamson";
             return (
               <div
                 key={slug}

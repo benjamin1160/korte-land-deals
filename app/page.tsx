@@ -9,7 +9,7 @@ import {
   shortMoney,
 } from "./lib/areas";
 import { HQ, SERVICE_RADIUS_MI } from "./lib/geo";
-import { SITE } from "./lib/site";
+import { ADDRESS_LINE, SITE } from "./lib/site";
 
 const CHEAPEST_LAND = [...AREAS].sort((a, b) => a.land.low - b.land.low)[0];
 
@@ -78,7 +78,7 @@ const FAQ = [
       CHEAPEST_LAND.land.low
     )} in ${CHEAPEST_LAND.county} County and run past ${shortMoney(
       Math.max(...AREAS.map((a) => a.land.high))
-    )} on the coast side. Every county card on the map shows its own range.`,
+    )} in the Hill Country and the Austin metro. Every county card on the map shows its own range.`,
   },
   {
     q: "How long does the whole thing take?",
@@ -98,14 +98,16 @@ const jsonLd = {
       "@type": "LocalBusiness",
       "@id": `${SITE.url}#business`,
       name: SITE.brand,
-      description: `Land and home packages financed as one loan across ${AREAS.length} North Florida counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}.`,
+      description: `Land and home packages financed as one loan across ${AREAS.length} Central Texas counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}.`,
       url: SITE.url,
       telephone: SITE.phone,
       email: SITE.email,
       address: {
         "@type": "PostalAddress",
-        addressLocality: HQ.city,
-        addressRegion: HQ.state,
+        streetAddress: SITE.street,
+        addressLocality: SITE.city,
+        addressRegion: SITE.state,
+        postalCode: SITE.zip,
         addressCountry: "US",
       },
       geo: { "@type": "GeoCoordinates", latitude: HQ.lat, longitude: HQ.lon },
@@ -120,7 +122,7 @@ const jsonLd = {
       },
       makesOffer: AREAS.map((a) => ({
         "@type": "Offer",
-        name: `Land and home package in ${a.county} County, FL`,
+        name: `Land and home package in ${a.county} County, TX`,
         priceSpecification: {
           "@type": "UnitPriceSpecification",
           price: a.startingPayment,
@@ -275,7 +277,7 @@ export default function Home() {
                   the land has to be chosen before we can put the deal
                   together.</strong>{" "}Owning it already is great. Under contract
                   works. A specific listing you have settled on works. &ldquo;Somewhere
-                  around Ocala&rdquo; does not — that is a wish, not a parcel.
+                  out past Elgin&rdquo; does not — that is a wish, not a parcel.
                 </p>
                 <p className="text-muted">
                   So start with the map: find your county and your number, get
@@ -462,9 +464,9 @@ export default function Home() {
             <p className="font-display text-xl uppercase text-bone">
               {SITE.brand}
             </p>
+            <p className="mt-1 text-sm text-muted">{ADDRESS_LINE}</p>
             <p className="mt-1 text-sm text-muted">
-              {HQ.city}, {HQ.state} · Serving {AREAS.length} counties within{" "}
-              {SERVICE_RADIUS_MI} miles
+              Serving {AREAS.length} counties within {SERVICE_RADIUS_MI} miles
             </p>
           </div>
           <div className="text-sm text-muted">

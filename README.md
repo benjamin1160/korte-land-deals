@@ -1,8 +1,9 @@
 # Local land + home price map
 
-A landing page for a Gainesville, FL dealership: an interactive map of every
-county inside a 100-mile delivery radius, each marked with a red star and the
-estimated monthly payment to get into a home **on land you own** there.
+A landing page for Korte Homes, the dealership at 3609 E 4th St, Taylor, TX: an
+interactive map of every county inside a 100-mile delivery radius, each marked
+with a red star and the estimated monthly payment to get into a home **on land
+you own** there.
 
 The pitch it makes, in order: here is what your county costs → land and home are
 financed as **one loan** → but you have to pick the parcel before we can build
@@ -22,7 +23,7 @@ Two other files worth knowing:
 
 | File | What it holds |
 | --- | --- |
-| `app/lib/site.ts` | Brand, phone, email, hours, canonical URL. **The phone number is a placeholder.** |
+| `app/lib/site.ts` | Brand, street address, phone, email, hours, canonical URL. **The phone number, email, and domain are placeholders.** |
 | `app/lib/areas.ts` | Pricing, land ranges, and `PAYMENT_ASSUMPTIONS` (the disclaimer text) |
 
 If you change payment assumptions — rate, term, down payment — update
@@ -62,13 +63,17 @@ curl -o counties.json \
 python3 scripts/generate-county-shapes.py counties.json
 ```
 
-Because the county polygons carry the true coastline, no hand-traced coast is
-needed; `app/lib/map-shapes.ts` is down to the interstates alone.
+The script filters to Texas (FIPS `48`) and to the window the map draws; change
+`STATES`, `HQ_LAT/HQ_LON`, and `PRICED` there if the dealership ever moves.
+
+Because the county polygons carry the true county and state lines, nothing is
+traced by hand; `app/lib/map-shapes.ts` is down to I-35, I-10, US-79, and
+US-290 — the roads a buyer actually navigates by.
 
 Each served county is shaded by its starting payment on a five-step scale
 (`PRICE_TIERS` in `areas.ts`). The ramp is **brightest at the cheapest end** —
 the quantity being encoded is how easy a county is to get into, and running it
-the other way made the priciest corner of the state the loudest thing on screen.
+the other way made the priciest corner of the map the loudest thing on screen.
 Every swatch is labelled with its band, and each county also carries its price in
 figures, so the direction is stated rather than inferred.
 

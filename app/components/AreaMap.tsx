@@ -51,7 +51,7 @@ function labelLayout(side: Area["labelSide"]) {
 }
 
 export default function AreaMap() {
-  const [selected, setSelected] = useState("dixie");
+  const [selected, setSelected] = useState("milam");
   const [hovered, setHovered] = useState<string | null>(null);
   const [budget, setBudget] = useState(PAYMENT_CEILING);
 
@@ -106,7 +106,7 @@ export default function AreaMap() {
             viewBox={VIEW.viewBox}
             className="block w-full"
             role="img"
-            aria-label={`Map of ${PLACED.length} Florida counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}, shaded and labelled by starting monthly payment.`}
+            aria-label={`Map of ${PLACED.length} Central Texas counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}, shaded and labelled by starting monthly payment.`}
           >
             <defs>
               <pattern
@@ -146,11 +146,7 @@ export default function AreaMap() {
             {/* Counties we do not deliver to: context, not offers */}
             <g stroke={WATER} strokeWidth="0.35">
               {CONTEXT.map((c) => (
-                <path
-                  key={`${c.state}-${c.name}`}
-                  d={c.d}
-                  fill={c.state === "GA" ? "#15181A" : UNSERVED_FILL}
-                />
+                <path key={`${c.state}-${c.name}`} d={c.d} fill={UNSERVED_FILL} />
               ))}
             </g>
 
@@ -220,28 +216,20 @@ export default function AreaMap() {
                 />
               )}
 
-              <text
-                x={project(30.95, -83.15).x}
-                y={project(30.95, -83.15).y}
-                className="fill-bone/30 font-sans"
-                fontSize="4.4"
-                letterSpacing="1.2"
-              >
-                GEORGIA
-              </text>
-
-              {/* Interstates */}
+              {/* Interstates and the US highways we run deliveries on */}
               <g fill="none" stroke="#F4F1E9" strokeOpacity="0.14" strokeWidth="0.9">
                 {ROADS.map((r) => (
                   <path key={r.id} d={r.d} />
                 ))}
               </g>
-              {ROADS.map((r) => (
+              {ROADS.map((r) => {
+                const w = r.label.length > 2 ? 9 : 6.8;
+                return (
                 <g key={`${r.id}-label`}>
                   <rect
-                    x={r.at.x - 3.4}
+                    x={r.at.x - w / 2}
                     y={r.at.y - 2.6}
-                    width="6.8"
+                    width={w}
                     height="5.2"
                     rx="1.4"
                     fill={INK}
@@ -259,7 +247,8 @@ export default function AreaMap() {
                     {r.label}
                   </text>
                 </g>
-              ))}
+                );
+              })}
 
               {/* Distance rings */}
               {[25, 50, 75].map((r) => (
