@@ -11,7 +11,7 @@ import json, math, pathlib, sys
 SRC = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "counties.json")
 OUT = pathlib.Path(__file__).parent.parent / "app/lib/county-shapes.generated.ts"
 
-HQ_LAT, HQ_LON = 29.6516, -82.3248
+HQ_LAT, HQ_LON = 30.5744, -97.3931
 MI_PER_DEG_LAT = 69.0
 MI_PER_DEG_LON = 69.172 * math.cos(math.radians(HQ_LAT))
 
@@ -19,18 +19,22 @@ MI_PER_DEG_LON = 69.172 * math.cos(math.radians(HQ_LAT))
 X_MIN, X_MAX = -150, 150
 Y_MIN, Y_MAX = -140, 140
 
-STATES = {"12": "FL", "13": "GA"}
+STATES = {"48": "TX"}
 
 # Counties that carry pricing, keyed by the slug used in app/lib/areas.ts.
 PRICED = {
-    "Alachua": "alachua", "Levy": "levy", "Bradford": "bradford", "Union": "union",
-    "Gilchrist": "gilchrist", "Marion": "marion", "Putnam": "putnam",
-    "Columbia": "columbia", "Baker": "baker", "Clay": "clay", "Duval": "duval",
-    "Nassau": "nassau", "St. Johns": "st-johns", "Flagler": "flagler",
-    "Volusia": "volusia", "Lake": "lake", "Sumter": "sumter", "Citrus": "citrus",
-    "Hernando": "hernando", "Dixie": "dixie", "Lafayette": "lafayette",
-    "Suwannee": "suwannee", "Hamilton": "hamilton", "Madison": "madison",
-    "Taylor": "taylor",
+    "Williamson": "williamson", "Milam": "milam", "Travis": "travis",
+    "Bastrop": "bastrop", "Bell": "bell", "Lee": "lee", "Burleson": "burleson",
+    "Caldwell": "caldwell", "Burnet": "burnet", "Fayette": "fayette",
+    "Lampasas": "lampasas", "Hays": "hays", "Falls": "falls", "Brazos": "brazos",
+    "Robertson": "robertson", "Coryell": "coryell", "Blanco": "blanco",
+    "Washington": "washington", "McLennan": "mclennan", "Gonzales": "gonzales",
+    "Comal": "comal", "Llano": "llano", "Guadalupe": "guadalupe",
+    "Colorado": "colorado", "Austin": "austin", "Lavaca": "lavaca",
+    "Limestone": "limestone", "Grimes": "grimes", "San Saba": "san-saba",
+    "Gillespie": "gillespie", "Leon": "leon", "Hamilton": "hamilton",
+    "Mills": "mills", "Bosque": "bosque", "Madison": "madison",
+    "Waller": "waller", "Kendall": "kendall",
 }
 
 
@@ -112,7 +116,7 @@ for f in data["features"]:
         {
             "name": name,
             "state": state,
-            "slug": PRICED.get(name) if state == "FL" else None,
+            "slug": PRICED.get(name),
             "d": "".join(paths),
             "pts": pts_kept,
         }
@@ -120,8 +124,7 @@ for f in data["features"]:
 
 out.sort(key=lambda c: (c["state"], c["name"]))
 priced = [c for c in out if c["slug"]]
-print(f"counties in frame: {len(out)}  (FL {sum(1 for c in out if c['state']=='FL')}, "
-      f"GA {sum(1 for c in out if c['state']=='GA')})")
+print(f"counties in frame: {len(out)}")
 print(f"priced matched: {len(priced)} / {len(PRICED)}")
 missing = set(PRICED) - {c["name"] for c in priced}
 if missing:
@@ -152,7 +155,7 @@ OUT.write_text(
 
 export type CountyShape = {
   name: string;
-  state: "FL" | "GA";
+  state: "TX";
   /** Set when this county has pricing in areas.ts. */
   slug: string | null;
   /** SVG path in map units. */

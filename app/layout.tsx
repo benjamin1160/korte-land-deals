@@ -22,8 +22,8 @@ const anton = Anton({
   subsets: ["latin"],
 });
 
-const title = `Land + Home Prices Near ${HQ.city}, FL — County by County`;
-const description = `See what it takes to get into a home on your own land in ${AREAS.length} North Florida counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}. Land and home financed as one loan, starting at ${money(
+const title = `Land + Home Prices Near ${HQ.city}, TX — County by County`;
+const description = `See what it takes to get into a home on your own land in ${AREAS.length} Central Texas counties within ${SERVICE_RADIUS_MI} miles of ${HQ.city}. Land and home financed as one loan, starting at ${money(
   CHEAPEST.startingPayment
 )}/mo in ${CHEAPEST.county} County.`;
 
@@ -36,10 +36,10 @@ export const metadata: Metadata = {
   description,
   applicationName: SITE.brand,
   keywords: [
-    "land and home package Florida",
-    "mobile home with land Gainesville FL",
+    "land and home package Central Texas",
+    "mobile home with land Taylor TX",
     "doublewide on land financing",
-    "North Florida land prices",
+    "Williamson County land prices",
     "manufactured home one loan",
   ],
   alternates: { canonical: "/" },
