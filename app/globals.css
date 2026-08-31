@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-anton), var(--font-geist-sans), ui-sans-serif, sans-serif;
+
+  /* Night field: deep pine black, bone type, signal red, money gold. */
+  --color-ink: #070b0a;
+  --color-panel: #0f1614;
+  --color-panel-2: #16201d;
+  --color-line: rgba(244, 241, 233, 0.11);
+  --color-bone: #f4f1e9;
+  --color-muted: #93a09a;
+  --color-flag: #ff3b2f;
+  --color-gold: #ffc24a;
+  --color-moss: #5be3c0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-ink);
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+}
+
+/* Anton has no lowercase personality to speak of; give it room to breathe. */
+.font-display {
+  letter-spacing: 0.005em;
+}
+
+@keyframes ping-slow {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  70%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-ping-slow {
+    animation: none;
+  }
+}
+
+/* Range thumb, dark-mode friendly across engines. */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 9999px;
+  background: var(--color-flag);
+  border: 3px solid var(--color-ink);
+  box-shadow: 0 0 0 1px var(--color-flag);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 1.1rem;
+  width: 1.1rem;
+  border-radius: 9999px;
+  background: var(--color-flag);
+  border: 3px solid var(--color-ink);
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-flag);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
