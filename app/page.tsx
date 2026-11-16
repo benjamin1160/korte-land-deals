@@ -9,6 +9,8 @@ import {
   shortMoney,
 } from "./lib/areas";
 import { HQ, SERVICE_RADIUS_MI } from "./lib/geo";
+import { HOMES } from "./lib/homes";
+import HomeCard from "./components/HomeCard";
 import { ADDRESS_LINE, SITE } from "./lib/site";
 
 const CHEAPEST_LAND = [...AREAS].sort((a, b) => a.land.low - b.land.low)[0];
@@ -285,6 +287,23 @@ export default function Home() {
                   will vet it and build the package around it.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Homes on the lot ── */}
+        <section id="homes" className="scroll-mt-16 border-b border-line">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-flag">
+              The house that goes on the dirt
+            </p>
+            <h2 className="mt-3 max-w-3xl font-display text-[clamp(2rem,5vw,3.5rem)] uppercase leading-[0.95] text-bone">
+              Homes we set
+            </h2>
+            <div className="mt-10 space-y-10">
+              {HOMES.map((h) => (
+                <HomeCard key={h.slug} home={h} />
+              ))}
             </div>
           </div>
         </section>
